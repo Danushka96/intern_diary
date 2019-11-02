@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card class="mx-auto" max-width="344" :hover="true" :dark="true" :loading="false" outlined>
+    <v-card class="mx-auto" max-width="97%" :hover="true" :dark="true" :loading="false" outlined>
       <v-card-title>{{content.title}}</v-card-title>
       <v-card-text>
           <p>{{content.description}}</p>

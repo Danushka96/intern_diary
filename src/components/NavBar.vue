@@ -6,12 +6,12 @@
     </v-toolbar-title>
     <v-spacer></v-spacer>
     <div v-if="!currentUser">
-      <router-link to="/login">
+      <router-link to="/login" v-if="currentRouteName==='register'">
         <v-btn text>
           <span class="mr-2">Login</span>
         </v-btn>
       </router-link>
-      <router-link to="/register">
+      <router-link to="/register" v-else>
         <v-btn text>
           <span class="mr-2">Register</span>
         </v-btn>
@@ -46,6 +46,9 @@ export default {
   computed: {
     currentUser() {
       return this.$store.state.currentUser;
+    },
+    currentRouteName() {
+        return this.$route.name;
     }
   }
 };

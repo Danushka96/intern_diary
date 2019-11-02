@@ -3,9 +3,9 @@
     <v-container fluid>
       <v-row justify="center" align="center">
         <v-card dark width="600">
-          <v-card-text>
-            <v-row justify="center" align="center">
-              <v-col cols="12" sm="6">
+          <v-card-text class=text-center>
+            <v-row justify="center" align="center" class="justify-center">
+              <v-col cols="12" sm="6" class="justify-center">
                 <v-btn dark color="red" width="300px" height="50px" @click="socialLogin('google')">
                   <v-icon right dark style="margin-right:20px">mdi-google</v-icon>Login with Google
                 </v-btn>

@@ -3,7 +3,7 @@
     <v-container>
       <v-row justify="center" align="center">
         <v-card dark width="600">
-          <v-card-text>
+          <v-card-text class=text-center>
             <v-row justify="center" align="center">
               <v-col cols="12" sm="6">
                 <v-btn dark color="red" width="300px" height="50px" @click="socialLogin('google')">

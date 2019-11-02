@@ -4,7 +4,7 @@
       v-model="picker"
       :show-current="true"
       :full-width="true"
-      style="margin-right:20px;"
+      style="margin-right:20px;margin-left: 20px;"
       @change="changeDate()"
     ></v-date-picker>
   </v-row>
