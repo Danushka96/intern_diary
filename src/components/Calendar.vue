@@ -1,17 +1,37 @@
 <template>
-   <v-row justify="center">
-    <v-date-picker v-model="picker" :show-current="true" :full-width="true" style="margin-right:20px;"></v-date-picker>
+  <v-row justify="center">
+    <v-date-picker
+      v-model="picker"
+      :show-current="true"
+      :full-width="true"
+      style="margin-right:20px;"
+    ></v-date-picker>
   </v-row>
 </template>
 
 <script>
 export default {
-    data: () => ({
-        picker: "2019-11-02"
-    })
-}
+  data: () => ({
+    picker: ""
+  }),
+  beforeMount(){
+      this.picker = this.formatDate()
+  },
+  methods: {
+    formatDate() {
+      var d = new Date(),
+        month = "" + (d.getMonth() + 1),
+        day = "" + d.getDate(),
+        year = d.getFullYear();
+
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+        
+      return [year, month, day].join("-");
+    }
+  }
+};
 </script>
 
 <style>
-
 </style>
