@@ -2,7 +2,7 @@
   <div>
     <v-row>
       <v-col cols="12" sm="6" v-for="(value,key) of getSelectedDateTasks" :key="key">
-        <TaskContent :content="value"></TaskContent>
+        <TaskContent :content="value" @delete="deleteTask" @edit="editTask"></TaskContent>
       </v-col>
     </v-row>
     <v-btn color="green" right bottom fixed fab large dark @click="dialog=true">
@@ -93,17 +93,25 @@ export default {
         date: this.currentDate
       });
       this.dialog = false;
-      this.title = "";
-      this.type = "";
-      this.description = "";
+      this.$refs.form.reset();
+    },
+    deleteTask(task) {
+      this.$firestore.taskList.doc(task[".key"]).delete();
+    },
+    editTask(task) {
+      this.$firestore.taskList.doc(task[".key"]).update({
+        title: task.title,
+        type: task.type,
+        description: task.description
+      });
     }
   },
   computed: {
     currentDate() {
       return this.$store.state.currentDate;
     },
-    getSelectedDateTasks(){
-        return this.taskList.filter(task => task.date===this.currentDate)
+    getSelectedDateTasks() {
+      return this.taskList.filter(task => task.date === this.currentDate);
     }
   }
 };
