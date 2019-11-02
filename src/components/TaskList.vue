@@ -1,14 +1,8 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="12" sm="6">
-        <TaskContent></TaskContent>
-      </v-col>
-      <v-col cols="12" sm="6">
-        <TaskContent></TaskContent>
-      </v-col>
-      <v-col cols="12" sm="6">
-        <TaskContent></TaskContent>
+      <v-col cols="12" sm="6" v-for="(value,key) of getSelectedDateTasks" :key="key">
+        <TaskContent :content="value"></TaskContent>
       </v-col>
     </v-row>
     <v-btn color="green" right bottom fixed fab large dark @click="dialog=true">
@@ -27,10 +21,21 @@
                   <v-text-field label="Title*" :rules="titleRules" v-model="title" required></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="6">
-                  <v-autocomplete :items="['Completed', 'Todo', 'Failed']" v-model="type" :rules="typeRules" label="Type" multiple></v-autocomplete>
+                  <v-autocomplete
+                    :items="['Completed', 'Todo', 'Failed']"
+                    v-model="type"
+                    :rules="typeRules"
+                    label="Type"
+                    multiple
+                  ></v-autocomplete>
                 </v-col>
                 <v-col cols="12">
-                  <v-textarea label="Description*" v-model="description" :rules="descriptionRules" required></v-textarea>
+                  <v-textarea
+                    label="Description*"
+                    v-model="description"
+                    :rules="descriptionRules"
+                    required
+                  ></v-textarea>
                 </v-col>
               </v-row>
             </v-container>
@@ -50,6 +55,7 @@
 <script>
 import TaskContent from "@/components/TaskContent.vue";
 import { db } from "../config/firebase";
+import firebase from "firebase";
 
 export default {
   components: {
@@ -61,33 +67,44 @@ export default {
     dialog: false,
     title: "",
     titleRules: [
-        v => !!v || 'Title is required',
-        v => (v && v.length > 3) || 'Title must be greater than 3 characters',
+      v => !!v || "Title is required",
+      v => (v && v.length > 3) || "Title must be greater than 3 characters"
     ],
     type: "",
-    typeRules: [
-        v => !!v || 'Type is required',
-    ],
+    typeRules: [v => !!v || "Type is required"],
     description: "",
-    descriptionRules:[
-        v => !!v || 'Description is required',
-        v => (v && v.length > 3) || 'Description must be greater than 5 characters',
-    ],
+    descriptionRules: [
+      v => !!v || "Description is required",
+      v =>
+        (v && v.length > 3) || "Description must be greater than 5 characters"
+    ]
   }),
   firestore() {
     return {
-      taskList: db.collection("taskList").doc('abcd').collection('tasks')
+      taskList: db.collection(firebase.auth().currentUser.uid)
     };
   },
   methods: {
-      saveTask(){
-          this.$firestore.taskList.add({
-              title: this.title,
-              type: this.type,
-              description: this.description
-          })
-          this.dialog = false;
-      }
+    saveTask() {
+      this.$firestore.taskList.add({
+        title: this.title,
+        type: this.type,
+        description: this.description,
+        date: this.currentDate
+      });
+      this.dialog = false;
+      this.title = "";
+      this.type = "";
+      this.description = "";
+    }
+  },
+  computed: {
+    currentDate() {
+      return this.$store.state.currentDate;
+    },
+    getSelectedDateTasks(){
+        return this.taskList.filter(task => task.date===this.currentDate)
+    }
   }
 };
 </script>

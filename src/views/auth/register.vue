@@ -93,7 +93,7 @@ export default {
             this.loading = false;
           },
           err => {
-              alert("Oops. " + err.message);
+              // alert("Oops. " + err.message);
             this.loading = false;
             this.snackbar = true;
             this.error = err.message;

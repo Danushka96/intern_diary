@@ -5,6 +5,7 @@
       :show-current="true"
       :full-width="true"
       style="margin-right:20px;"
+      @change="changeDate()"
     ></v-date-picker>
   </v-row>
 </template>
@@ -16,6 +17,7 @@ export default {
   }),
   beforeMount(){
       this.picker = this.formatDate()
+      this.changeDate()
   },
   methods: {
     formatDate() {
@@ -28,6 +30,9 @@ export default {
       if (day.length < 2) day = "0" + day;
         
       return [year, month, day].join("-");
+    },
+    changeDate(){
+        this.$store.commit("setCurrentDate", this.picker);
     }
   }
 };

@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         currentUser: null,
+        currentDate: null,
     },
     mutations: {
         login(state, user) {
@@ -13,6 +14,9 @@ export default new Vuex.Store({
         },
         logout(state) {
             state.currentUser = null;
+        },
+        setCurrentDate(state, date) {
+            state.currentDate = date;
         }
     },
     actions: {},
