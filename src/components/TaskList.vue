@@ -4,6 +4,9 @@
       <v-col cols="12" sm="6" v-for="(value,key) of getSelectedDateTasks" :key="key">
         <TaskContent :content="value" @delete="deleteTask" @edit="editTask"></TaskContent>
       </v-col>
+      <v-col cols="12" sm="6" v-if="getSelectedDateTasks.length === 0">
+         <p> No any tasks</p>
+      </v-col>
     </v-row>
     <v-btn color="green" right bottom fixed fab large dark @click="dialog=true">
       <v-icon>mdi-plus</v-icon>

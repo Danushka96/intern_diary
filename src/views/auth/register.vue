@@ -6,10 +6,17 @@
           <v-card-text>
             <v-row justify="center" align="center">
               <v-col cols="12" sm="6">
-                <v-btn dark color="red" width="300px" height="50px">
+                <v-btn dark color="red" width="300px" height="50px" @click="socialLogin('google')">
                   <v-icon right dark style="margin-right:20px">mdi-google</v-icon>Register with Google
                 </v-btn>
-                <v-btn dark color="blue" width="300px" style="margin-top:20px" height="50px">
+                <v-btn
+                  dark
+                  color="blue"
+                  width="300px"
+                  style="margin-top:20px"
+                  height="50px"
+                  @click="socialLogin('facebook')"
+                >
                   <v-icon right dark style="margin-right:20px">mdi-facebook</v-icon>Register with Facebook
                 </v-btn>
                 <v-btn
@@ -18,6 +25,7 @@
                   dark
                   style="margin-top:20px"
                   height="50px"
+                  @click="socialLogin('twitter')"
                 >
                   <v-icon right dark style="margin-right:20px">mdi-twitter</v-icon>Register with Twitter
                 </v-btn>
@@ -32,9 +40,29 @@
                     outlined
                     style="margin-top:20px"
                   ></v-text-field>
-                  <v-text-field type="password" v-model="password" :rules="passwordRules" label="Password" outlined></v-text-field>
-                  <v-text-field type="password" v-model="confirmpassword" :error-messages="passwordMatchError()" label="Confirm Password" outlined></v-text-field>
-                  <v-btn dark color="green" type="submit" style="float:right" :loading="loading" @click="loading=true" :disabled="!valid" >Signup</v-btn>
+                  <v-text-field
+                    type="password"
+                    v-model="password"
+                    :rules="passwordRules"
+                    label="Password"
+                    outlined
+                  ></v-text-field>
+                  <v-text-field
+                    type="password"
+                    v-model="confirmpassword"
+                    :error-messages="passwordMatchError()"
+                    label="Confirm Password"
+                    outlined
+                  ></v-text-field>
+                  <v-btn
+                    dark
+                    color="green"
+                    type="submit"
+                    style="float:right"
+                    :loading="loading"
+                    @click="loading=true"
+                    :disabled="!valid"
+                  >Signup</v-btn>
                 </v-form>
               </v-col>
             </v-row>
@@ -81,24 +109,46 @@ export default {
         : "Passwords must match";
     },
     signup() {
-        console.log('hi')
+      console.log("hi");
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
         .then(
           user => {
-              console.log('hi hi')
+            console.log("hi hi");
             this.$store.commit("login", user);
             this.$router.replace("/login");
             this.loading = false;
           },
           err => {
-              // alert("Oops. " + err.message);
+            // alert("Oops. " + err.message);
             this.loading = false;
             this.snackbar = true;
             this.error = err.message;
           }
         );
+    },
+    socialLogin: function(service) {
+      this.loading = true;
+      let provider = null;
+      if (service === "google") {
+        provider = new firebase.auth.GoogleAuthProvider();
+      } else if (service === "facebook") {
+        provider = new firebase.auth.FacebookAuthProvider();
+      } else {
+        provider = new firebase.auth.TwitterAuthProvider();
+      }
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(result => {
+          this.$store.commit("login", result.user);
+          this.$router.push("/");
+          this.loading = false;
+        })
+        .catch(err => {
+          alert("oops.. " + err.message);
+        });
     }
   }
 };
