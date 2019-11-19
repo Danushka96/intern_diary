@@ -1,16 +1,17 @@
 <template>
   <div>
-    <v-card class="mx-auto" max-width="97%" :hover="true" :dark="true" :loading="false" outlined>
-      <v-card-title>{{content.title}}</v-card-title>
-      <v-card-text>
-          <p>{{content.description}}</p>
-          <v-chip v-for="(value,key) of content.type" :key="key">{{value}}</v-chip>
-          </v-card-text>
-      <v-card-actions>
-        <v-btn color="blue" @click="editDialog=true" text>Edit</v-btn>
-        <v-btn color="red" @click="deleteConfirm=true" text>Delete</v-btn>
-      </v-card-actions>
-    </v-card>
+
+<!--    <v-card class="mx-auto" max-width="97%" :hover="true" :dark="true" :loading="false" outlined>-->
+<!--      <v-card-title>{{content.title}}</v-card-title>-->
+<!--      <v-card-text>-->
+<!--          <p>{{content.description}}</p>-->
+<!--          <v-chip v-for="(value,key) of content.type" :key="key">{{value}}</v-chip>-->
+<!--          </v-card-text>-->
+<!--      <v-card-actions>-->
+<!--        <v-btn color="blue" @click="editDialog=true" text>Edit</v-btn>-->
+<!--        <v-btn color="red" @click="deleteConfirm=true" text>Delete</v-btn>-->
+<!--      </v-card-actions>-->
+<!--    </v-card>-->
     <v-dialog v-model="editDialog" persistent max-width="600px">
       <v-card>
         <v-card-title>

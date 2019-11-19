@@ -5,8 +5,10 @@ import router from './router'
 import vuetify from './plugins/vuetify';
 import VueFirestore from 'vue-firestore';
 import firebase from 'firebase';
+import VueClipboard from 'vue-clipboard2'
 
 Vue.use(VueFirestore);
+Vue.use(VueClipboard);
 Vue.config.productionTip = false
 
 let app = null;
