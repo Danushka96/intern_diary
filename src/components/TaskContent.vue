@@ -5,7 +5,7 @@
                 <template v-slot:activator>
                     <v-btn color="blue darken-2" dark fab style="margin-left: 10px; margin-bottom: 35px !important;" v-model="fab" x-small  class="my-2" >
                         <v-icon v-if="fab">mdi-close</v-icon>
-                        <v-icon v-else>mdi-pencil</v-icon>
+                        <v-icon v-else>{{getTaskIcon()}}</v-icon>
                     </v-btn>
                 </template>
               <v-tooltip bottom>
@@ -84,6 +84,17 @@
                     ".key": this.content[".key"],
                     "state": state
                 })
+            },
+            getTaskIcon(){
+                if(this.content.state===0){
+                    return "mdi-check"
+                }else if(this.content.state===1){
+                    return "mdi-progress-check"
+                }else if (this.content.state===2){
+                    return "mdi-progress-alert"
+                }else{
+                    return "mdi-pencil"
+                }
             }
         }
     };
