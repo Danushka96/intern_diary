@@ -82,7 +82,9 @@
             updateTask(state){
                 this.$emit("update", {
                     ".key": this.content[".key"],
-                    "state": state
+                    "state": state,
+                    "date": this.content["date"],
+                    "description": this.content["description"]
                 })
             },
             getTaskIcon(){

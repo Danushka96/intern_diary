@@ -155,9 +155,26 @@ export default {
       this.$firestore.taskList.doc(task[".key"]).delete();
     },
     editTask(task) {
-      this.$firestore.taskList.doc(task[".key"]).update({
+      let key = task[".key"];
+      let cdate = task["date"];
+      let description = task["description"];
+      this.$firestore.taskList.doc(key).update({
         state: task.state
       });
+      if(task.state===1){
+        task.date = this.getNextDate(cdate);
+        task.state = -1;
+        task.description = description;
+        this.$firestore.taskList.add(task);
+      }
+    },
+    getNextDate(cdate){
+      let currentData = cdate.split("-");
+      let dataFormat = new Date(parseInt(currentData[0]), parseInt(currentData[1]), parseInt(currentData[2]));
+      let nextDate = new Date(+dataFormat);
+      let date = nextDate.getDate()+1;
+      nextDate.setDate(date);
+      return nextDate.getFullYear()+"-"+nextDate.getMonth()+"-"+nextDate.getDate();
     }
   },
   computed: {
