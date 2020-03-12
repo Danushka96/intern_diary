@@ -1,0 +1,17 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: Danushka96/actions@v1.0
+
+    - name: CI-Firebase-hosting
+      run: echo Hello, world!
+
